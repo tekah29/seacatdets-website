@@ -1,0 +1,14 @@
+{
+  "name": "seacatdets-website",
+  "version": "1.0.0",
+  "description": "SeaCatdets - DeFi education platform for seafarers",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["defi", "solana", "jupiter", "seafarers", "blockchain"],
+  "author": "SeaCatdets Team",
+  "license": "MIT"
+}
