@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaCatdets - Navigate the Seas of DeFi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0B1426 0%, #1a2039 50%, #2a4065 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00D4FF;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00D4FF;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00D4FF;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 184, 0, 0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="waves" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0 50 Q25 25 50 50 T100 50 V100 H0 Z" fill="rgba(0,212,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23waves)"/></svg>') repeat;
+            animation: wave 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100px); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00D4FF, #FFB800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            to { text-shadow: 0 0 30px rgba(0, 212, 255, 0.5), 0 0 40px rgba(255, 184, 0, 0.3); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #00D4FF, #FFB800);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #00D4FF;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00D4FF, #FFB800, #00D4FF);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #00D4FF;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: #FFB800;
+        }
+
+        /* Jupiter Theme Integration */
+        .jupiter-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 184, 0, 0.1) 100%);
+            border-radius: 20px;
+            margin: 2rem 0;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00D4FF;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #FFB800;
+            font-weight: 500;
+        }
+
+        /* Roadmap */
+        .roadmap {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .roadmap-item:nth-child(even) {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .roadmap-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0 2rem;
+        }
+
+        .roadmap-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00D4FF, #FFB800);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #00D4FF;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #FFB800;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .roadmap-item {
+                flex-direction: column !important;
+                text-align: center !important;
+            }
+            
+            .roadmap-content {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">🌊 SeaCatdets</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#learn">Learn</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Navigate the Seas of DeFi</h1>
+                <p>Chart your course through decentralized finance with SeaCadets - empowering seafarers to explore the boundless opportunities of Solana and beyond.</p>
+                <a href="#learn" class="cta-button">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="jupiter-section fade-in">
+                <h2 class="section-title">About SeaCatdets</h2>
+                <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">
+                    Built in alignment with Jupiter DAO's ethos, SeaCatdets bridges the gap between traditional seafaring and modern decentralized finance. We believe that those who navigate the world's oceans should also be equipped to navigate the digital seas of opportunity.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-card floating">
+                        <div class="stat-number">🚢</div>
+                        <div class="stat-label">Seafarer Focused</div>
+                    </div>
+                    <div class="stat-card floating" style="animation-delay: 0.2s;">
+                        <div class="stat-number">⚡</div>
+                        <div class="stat-label">Solana Powered</div>
+                    </div>
+                    <div class="stat-card floating" style="animation-delay: 0.4s;">
+                        <div class="stat-number">🔮</div>
+                        <div class="stat-label">Jupiter Aligned</div>
+                    </div>
+                    <div class="stat-card floating" style="animation-delay: 0.6s;">
+                        <div class="stat-number">🌐</div>
+                        <div class="stat-label">Multi-Chain Future</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Why Choose SeaCatdets?</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in" style="animation-delay: 0.1s;">
+                    <div class="feature-icon">🧭</div>
+                    <h3>Navigation Made Simple</h3>
+                    <p>Just like using maritime navigation tools, our platform makes DeFi accessible and intuitive for seafarers, breaking down complex concepts into easy-to-understand modules.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">⚓</div>
+                    <h3>Anchored in Security</h3>
+                    <p>Built on Solana's robust infrastructure with Jupiter's proven protocols, ensuring your digital assets are as secure as ships in a well-protected harbor.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.3s;">
+                    <div class="feature-icon">🌊</div>
+                    <h3>Riding the Waves</h3>
+                    <p>Learn to surf the volatility of crypto markets with our educational resources tailored specifically for the seafaring community's unique lifestyle and schedule.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.4s;">
+                    <div class="feature-icon">🏴‍☠️</div>
+                    <h3>Community Crew</h3>
+                    <p>Join a community of like-minded seafarers exploring DeFi together, sharing knowledge and supporting each other through the journey.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.5s;">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Cross-Chain Horizons</h3>
+                    <p>While starting with Solana, prepare for the future with Jupnet's multi-chain vision, expanding your opportunities across different blockchain ecosystems.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.6s;">
+                    <div class="feature-icon">📚</div>
+                    <h3>Continuous Learning</h3>
+                    <p>From basic wallet setup to advanced DeFi strategies, our curriculum grows with you, ensuring you're always ready for the next port of call.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Modules -->
+    <section id="learn" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Chart Your Course</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Beginner's Harbor</h3>
+                    <p>Start your DeFi journey with the basics: What is blockchain? How does Solana work? Setting up your first wallet safely and securely.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.1s;">
+                    <div class="feature-icon">🗺️</div>
+                    <h3>Trading Waters</h3>
+                    <p>Learn the fundamentals of decentralized exchanges, starting with Jupiter Exchange's powerful aggregation technology and best practices for swapping tokens.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">💎</div>
+                    <h3>Treasure Management</h3>
+                    <p>Discover yield farming, staking, and other DeFi protocols that can help grow your digital treasure chest while you're at sea.</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.3s;">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Advanced Navigation</h3>
+                    <p>Master advanced strategies including liquidity providing, governance participation, and preparing for the multi-chain future with Jupnet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="section">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Voyage Ahead</h2>
+            <div class="roadmap">
+                <div class="roadmap-item fade-in">
+                    <div class="roadmap-icon">🌊</div>
+                    <div class="roadmap-content">
+                        <h3>Phase 1: Setting Sail</h3>
+                        <p>Launch SeaCadets platform with comprehensive Solana DeFi education, Jupiter Exchange integration tutorials, and basic wallet security courses.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item fade-in" style="animation-delay: 0.1s;">
+                    <div class="roadmap-icon">🧭</div>
+                    <div class="roadmap-content">
+                        <h3>Phase 2: Open Waters</h3>
+                        <p>Expand with interactive simulations, live trading practice environments, and community features connecting seafarers worldwide.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item fade-in" style="animation-delay: 0.2s;">
+                    <div class="roadmap-icon">🏝️</div>
+                    <div class="roadmap-content">
+                        <h3>Phase 3: New Horizons</h3>
+                        <p>Prepare for Jupnet's multi-chain future with cross-chain education modules, advanced DeFi strategies, and institutional partnerships.</p>
+                    </div>
+                </div>
+                <div class="roadmap-item fade-in" style="animation-delay: 0.3s;">
+                    <div class="roadmap-icon">🚀</div>
+                    <div class="roadmap-content">
+                        <h3>Phase 4: Uncharted Territories</h3>
+                        <p>Launch SeaCadets DAO, create seafarer-specific DeFi products, and establish the largest maritime DeFi community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section">
+        <div class="container">
+            <div class="jupiter-section fade-in" style="text-align: center;">
+                <h2>Ready to Set Sail?</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                    Join thousands of seafarers already navigating the exciting waters of DeFi. Your journey to financial freedom starts with a single step aboard SeaCatdets.
+                </p>
+                <a href="#" class="cta-button" style="margin-right: 1rem;">Start Learning</a>
+                <a href="#" class="cta-button" style="background: linear-gradient(45deg, #FFB800, #00D4FF);">Join Community</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SeaCatdets</h3>
+                    <p>Empowering seafarers to navigate the seas of DeFi with confidence and knowledge.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#about">About Us</a>
+                    <a href="#features">Features</a>
+                    <a href="#learn">Learn DeFi</a>
+                    <a href="#roadmap">Roadmap</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <a href="#">Documentation</a>
+                    <a href="#">Tutorials</a>
+                    <a href="#">Community Forum</a>
+                    <a href="#">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <a href="#">Discord</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">Newsletter</a>
+                </div>
+            </div>
+            <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem; margin-top: 2rem;">
+                <p>&copy; 2025 SeaCatdets. Built in alignment with Jupiter DAO's vision. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Add some interactivity to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-5px) scale(1)';
+            });
+        });
+
+        // Dynamic background particles (optional enhancement)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 4px;
+                height: 4px;
+                background: rgba(0, 212, 255, 0.3);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1;
+                animation: float ${Math.random() * 10 + 10}s linear infinite;
+            `;
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 20000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 2000);
+
+        // Add floating animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) rotate(0deg);
+                    opacity: 0;
+                }
+                10% {
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
